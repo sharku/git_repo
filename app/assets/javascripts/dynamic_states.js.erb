@@ -1,0 +1,100 @@
+var states = new Array();
+
+<% @sections = Indexer.pluck(:document, :section, :subsection, :acpt_criteria) %>
+<% @sections.each do |q| %>
+	<% if q[2].blank? %>
+	<% number = q[1].delete("^0-9.") %>
+	<%	q[2] = "null" + number %>
+	<% end %>
+	states.push(new Array('<%= q[0] %>','<%=q[1]  %>','<%=q[2]  %>'));
+<% end %>
+
+
+function documentSelected() {
+	$("textarea#ggd2_area").html("");
+	$("textarea#usnrc_area").html("");
+	$("textarea#accept_area").html("");
+	$('#subsectionbox').html("");
+	$('#sectionbox').html("");
+	var document = $('select#documentsbox :selected').val();
+	
+	for (i = 0; i < states.length; i++)
+	{
+		if (states[i][0] == document)
+		{
+			$("#sectionbox").append(new Option(states[i][1]));
+		}
+			
+	}
+	 	
+}
+
+function sectionSelected() {
+	$("textarea#ggd2_area").html("");
+	$("textarea#usnrc_area").html("");
+	$("textarea#accept_area").html("");
+	$('#subsectionbox').html("");
+	var section = $('select#sectionbox :selected').val();
+	
+	for (i = 0; i < states.length; i++)
+	{
+		if (states[i][1] == section)
+		{
+			$("#subsectionbox").append(new Option(states[i][2]));
+		}
+			
+	}
+	$("#subsectionbox").append(new Option(' '));
+}
+
+function subsectionSelected() {
+	$("textarea#accept_area").html("");
+	
+	var subsection = $('select#subsectionbox :selected').val();
+	
+	for (i = 0; i < states.length; i++)
+	{
+		if (states[i][2] == subsection)
+		{
+			getOtherOutput(states[i][0],states[i][1],states[i][2]);
+			//$("textarea#accept_area").html(states[i][3]);
+		}
+			
+	}
+}
+
+function getOtherOutput(document, section, subsection)
+{
+	//alert(document+' '+section+' '+' '+subsection );
+	$.ajax({
+		url: "/indexers/getdata",
+		dataType: 'json',
+		data: {document: document, section: section, subsection: subsection},
+		success: function(data) {
+			//$.each(data, function(key, value) {
+			//	alert(key + ", ", $.param(value));
+			//});
+			$("textarea#ggd2_area").html(data.ggd);
+			$("textarea#usnrc_area").html(data.usnrc);
+			$("textarea#accept_area").html(data.acpt_criteria);
+		},
+		error: function() {
+			alert('Ajax hatası');
+		}
+	})
+}
+$(document).ready( function() {
+	$('#documentsbox').change(function() {
+		
+		documentSelected();
+	});
+	
+	$('#sectionbox').change(function() {
+		
+		sectionSelected();
+	});
+	
+	$('#subsectionbox').change(function() {
+		subsectionSelected();
+	});
+});
