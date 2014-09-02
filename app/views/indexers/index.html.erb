@@ -1,106 +1,56 @@
 <% javascript 'dynamic_states' %>
-<div class="Indexer index">
-	<h3> Indexes</h3>
-	<table width="%100" border="0" cellspacing="0" cellpadding="5">
-		<tr>
-			<td width="%50" height="%100">
-				<table class="Listing indexer" summary="Indexes get from db"
-				style="display: inline-block; vertical-align: top; border: 1px solid;">
-				<tr>
-					
-					<td>
-						<label rows="7" cols="12"> Documents
-						</label>
-					</td>
-					<td>
-						<label rows="7" cols="18"> Requirements
-						</label>
-					</td>
-					<td>
-						<label rows="7" cols="12"> Blocks
-						</label>
-					</td>
-					
-				</tr>
-				<tr>
-					<td>
-							<% documents = Indexer.uniq.pluck(:document) %>
-    						<%= select_tag 'documentsbox', options_for_select(documents), {:prompt => "Select one item"}%>
-						
-					</td>
-					<td>
-						<% sections = Indexer.pluck(:section) %>
-						<%= select_tag 'sectionbox', options_for_select(sections) %>
-					</td>
-					<td>
-						<% subsections = Indexer.pluck(:subsection) %>
-						<%= select_tag 'subsectionbox', options_for_select(subsections, selected = nil) %>
-					</td>
-			
-				</tr>
-				<tr>
-					<td colspan="3">
-					</td>
-				</tr>
-					
-				<tr>
-					<td colspan="2">
-						USNRC
-					</td>
-					<td>
-						Related Standarts
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<textarea id="usnrc_area" rows="14" cols="25">
-						</textarea>
-					</td>
-					<td>
-						<textarea rows="14" cols="18">
-						</textarea>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						DS 430
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3">
-						<textarea rows="7" cols="50">
-						</textarea>
-					</td>
-				</tr>
-				</table>			
-			</td>
-			
-			<td width="%50" height="%100">
-				<table class="indexers text" 
-				style="display: inline-block; vertical-align: top; border: 1px solid;">
-					<tr>
-						<td>Acceptance Criteria</td>
-					</tr>
-					<tr>
-						<td>
-							<textarea id="accept_area" rows="15" cols="48">
-							</textarea>
-						</td>
-					</tr>
-					<tr>
-						<td>TAEK Guide (GGD 2)</td>
-					</tr>
-					<tr>
-						<td>
-							<textarea id="ggd2_area" rows="15" cols="48">
-								
-							</textarea>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-	
-	
+<div class="row">
+	<div class="large-6 columns">
+		<div class="row">
+			<div class="large-4 columns"> <%=label_tag "Documents"%> </div>
+			<div class="large-4 columns"> Requirements </div>
+			<div class="large-4 columns"> Blocks </div>
+		</div>
+		<div class="row">
+			<div class="large-4 columns">
+				<% documents = Indexer.uniq.pluck(:document) %>
+    			<%= select_tag 'documentsbox', options_for_select(documents), {:prompt => "Select one item"}%> 
+			</div>
+			<div class="large-4 columns">
+				<% sections = Indexer.pluck(:section) %>
+				<%= select_tag 'sectionbox', options_for_select(sections) %>
+			</div>
+			<div class="large-4 columns"> 
+				<% subsections = Indexer.pluck(:subsection) %>
+				<%= select_tag 'subsectionbox', options_for_select(subsections, selected = nil) %>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-4 columns"><%=label_tag "Related Standarts"%></div>
+		</div>
+		<div class="row">
+			<div id="standart_area" class="large-12 columns"> </div>
+		</div>
+		<div class="row">
+			<div class="large-4 columns"><%=label_tag "US NRC"%></div>
+		</div>
+		<div class="row">
+			<div id="usnrc_area" class="large-12 columns"> </div>
+		</div>
+		<div class="row">
+			<div class="large-4 columns"><%=label_tag "DS 430"%></div>
+		</div>
+		<div class="row">
+			<div id="ds_area" class="large-12 columns"> </div>
+		</div>
+	</div>
+	<div class="large-6 columns" data-equalizer>
+		<div class="row" data-equalizer>
+			<div class="large-4 columns"></div>
+		</div>
+		<div class="row">
+			<div id="accept_area" class="large-12 columns"> </div>
+		</div>
+		<div class="row">
+			<div class="large-4 columns"><%=label_tag "TAEK Guide (GGD 2)"%></div>
+		</div>
+		<div class="row">
+			<div id="ggd2_area" class="large-12 columns"> </div>
+		</div>
+	</div>
 </div>

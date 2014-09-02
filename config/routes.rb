@@ -1,8 +1,10 @@
 Chapter8Indexer::Application.routes.draw do
+  #get "main_page/index"
   #get "indexers/index"
   #get "indexers/show"
   
   #get "indexers/index"
+  root :to => "main_page#index"
   match ':controller(/:action(/:id))', :via => [:get, :post]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

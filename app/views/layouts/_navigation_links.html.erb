@@ -1,0 +1,61 @@
+<%# add navigation links to this file %>
+<% sections = Indexer.where(document: 'SSR 2/1').uniq.pluck(:section) %>
+<% divide_counter = 1%>
+<% element_counter = 0%>
+<% count = 0%>
+<% i_count = 0%>
+<% section_hash = Hash.new%>
+<% section_array = Array.new(8)%>
+
+<li><%= link_to 'Our Work', root_path %></li>
+<li class="has-dropdown"><a href="#">Tesis İçi AC </a>
+	<ul class="dropdown">
+		<li><a href="#">SSR2/1</a></li>
+	</ul>
+</li>
+<li class="has-dropdown"><a href="#">Tesis İçi DC</a>
+	<ul class="dropdown">
+		<li class="has-dropdown">
+			<a href="#">SSR2/1</a>
+			<ul class="dropdown" style="width: 480px">
+				<li>
+					<% sections.each do |s|%>
+						<% section_array[count] = s.to_s %>
+						<% count = count + 1%>
+						<% element_counter = element_counter + 1 %>
+							<%if element_counter%8 == 0%>
+								<% count = 0%>
+								<% section_hash[i_count] = section_array.dup %>
+								
+								<% i_count = i_count + 1%>
+								<% section_array.clear%>
+								
+							<%end%>
+					<% end %>
+					<%divide_counter = element_counter%8 %>
+					<% section_hash[i_count] = section_array.dup %>
+					
+					<%(0..(divide_counter-1)).each do |i| %>
+						<ul style="width: 120px;float:left;">
+							<%puts section_hash[i].to_s%>
+							<% (0..(section_hash[i].length-1)).each do |j|%>
+								<%=content_tag(:li) do%>
+								<%=link_to section_hash[i][j], {:controller => "indexers", :action => "getdata", :params => {
+								:document => "SSR 2/1", :section => section_hash[i][j]}}%>
+						
+								<%end%>
+								
+							<%end%>
+						</ul>
+					<%end%>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</li>
+
+<li class="has-dropdown"><a href="#">Tesis Dışı</a>
+	<ul class="dropdown">
+		<li><a href="#">SSR2/1</a></li>
+	</ul>
+</li>

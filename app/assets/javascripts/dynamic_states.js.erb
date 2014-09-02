@@ -11,9 +11,9 @@ var states = new Array();
 
 
 function documentSelected() {
-	$("textarea#ggd2_area").html("");
-	$("textarea#usnrc_area").html("");
-	$("textarea#accept_area").html("");
+	$("#ggd2_area").html("");
+	$("#usnrc_area").html("");
+	$('#accept_area').html("");
 	$('#subsectionbox').html("");
 	$('#sectionbox').html("");
 	var document = $('select#documentsbox :selected').val();
@@ -30,9 +30,9 @@ function documentSelected() {
 }
 
 function sectionSelected() {
-	$("textarea#ggd2_area").html("");
-	$("textarea#usnrc_area").html("");
-	$("textarea#accept_area").html("");
+	$("#ggd2_area").html("");
+	$("#usnrc_area").html("");
+	$("#accept_area").html("");
 	$('#subsectionbox').html("");
 	var section = $('select#sectionbox :selected').val();
 	
@@ -48,7 +48,7 @@ function sectionSelected() {
 }
 
 function subsectionSelected() {
-	$("textarea#accept_area").html("");
+	$('#accept_area').html("");
 	
 	var subsection = $('select#subsectionbox :selected').val();
 	
@@ -57,7 +57,7 @@ function subsectionSelected() {
 		if (states[i][2] == subsection)
 		{
 			getOtherOutput(states[i][0],states[i][1],states[i][2]);
-			//$("textarea#accept_area").html(states[i][3]);
+			//$(#accept_area").html(states[i][3]);
 		}
 			
 	}
@@ -74,9 +74,9 @@ function getOtherOutput(document, section, subsection)
 			//$.each(data, function(key, value) {
 			//	alert(key + ", ", $.param(value));
 			//});
-			$("textarea#ggd2_area").html(data.ggd);
-			$("textarea#usnrc_area").html(data.usnrc);
-			$("textarea#accept_area").html(data.acpt_criteria);
+			$("#ggd2_area").html(data.ggd);
+			$("#usnrc_area").html(data.usnrc);
+			$("#accept_area").html(data.acpt_criteria);
 		},
 		error: function() {
 			alert('Ajax hatası');
